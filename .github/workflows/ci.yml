@@ -1,0 +1,25 @@
+name: WSO2 APIManager Cloud CICD
+on:
+  push:
+    branches: [main]
+
+jobs:
+  apim-cloud-cicd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo into VM
+        uses: actions/checkout@v2.3.4
+
+      - name: APIM Cloud CICD Public Action
+        uses: mihinduranasinghe/WSO2-APIManager-Cloud-CICD@v1.2.0
+        id: apim
+        with:
+          usernameDevTenant: "mihindu@wso2.com@development"
+          passwordDevTenant: ${{secrets.PASSWORD}}
+          usernameProdTenant: "mihindu@wso2.com@production"
+          passwordProdTenant: ${{secrets.PASSWORD}}
+          APIProjectName: "SampleStore"
+          OASJsonFilePath: "petstore.json"
+          APIDefinitionFilePath: "api_template.yaml"
+          APIVersion: "1.0.0"
+          PostmanCollectionTestFile: "sample_store.postman_collection.json"
